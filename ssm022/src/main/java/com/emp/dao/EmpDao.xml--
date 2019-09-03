@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.emp.dao.EmpDao">
+ 	
+ 	<select id="queryAll"  resultMap="empMapper">
+ 	    select e.empno,e.ename,e.esex,e.eage,e.esalary,
+ 	               d.deptno,d.dname,d.location,
+ 	               e.mgrno mno, m.ename mname
+ 	    from t_emp e inner join t_dept d
+ 	    on e.deptno = d.deptno
+ 	    inner join t_emp m
+ 	    on e.mgrno = m.empno	    
+ 	</select>
+ 	<resultMap type="com.emp.entity.Emp" id="empMapper">
+ 	     <id column="empno" property="empno" />
+ 	     <result column="ename" property="ename"/>
+ 	     <result column="esex"  property="esex"/>
+ 	     <result column="eage" property="eage"/>
+ 	     <result column="esalary"  property="esalary"/>
+ 	     <association column="deptno" property="dept"  
+ 	     javaType="com.emp.entity.Dept">
+ 	        <id column="deptno" property="deptno"/>
+ 	        <result column="dname" property="dname"/>
+ 	        <result column="location" property="location"/>
+ 	     </association>
+ 	     <association column="mgrno" property="mgr"
+ 	      javaType="com.emp.entity.Emp">
+ 	          <id column="mno" property="empno"/>
+ 	          <result column="mname"  property="ename"/>
+ 	      </association>
+ 	</resultMap>
+ 	
+</mapper>
